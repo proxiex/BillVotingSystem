@@ -8,7 +8,9 @@
     "start": "nodemon ./server/dist/",
     "build": "babel ./server/src -d ./server/dist",
     "dev:server": "nodemon --watch server --exec babel-node -- server/src",
-    "postinstall": "npm run build"
+    "postinstall": "npm run migrate && npm run build",
+    "seed": "sequelize db:seed:all",
+    "migrate": "sequelize db:migrate && npm run seed"
   },
   "keywords": [
     "Bill",
