@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('users', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -54,28 +54,12 @@ module.exports = {
     },
     createdAt: {
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'Date cannot be emtpy'
-        },
-        isDate: {
-          msg: 'Date is invalid'
-        }
-      },
       type: Sequelize.DATE
     },
     updatedAt: {
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'Date cannot be empty'
-        },
-        isDate: {
-          msg: 'Date is invalid'
-        }
-      },
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Users')
+  down: queryInterface => queryInterface.dropTable('users')
 };

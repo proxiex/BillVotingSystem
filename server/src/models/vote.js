@@ -1,31 +1,32 @@
-
-
-module.exports = (sequelize, DataTypes) => {
-  const Vote = sequelize.define('Vote', {
+export default (sequelize, DataTypes) => {
+  const vote = sequelize.define('vote', {
     billId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     userId: {
-      type: DataTypes.INTERGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     vote: {
       type: DataTypes.ENUM('For', 'Against'),
       allowNull: false
+    },
+    opinion: {
+      type: DataTypes.STRING
     }
   });
 
-  Vote.associate = (models) => {
-    Vote.belongsTo(models.Users, {
+  vote.associate = (models) => {
+    vote.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
 
-    Vote.belongsTo(models.Bills, {
+    vote.belongsTo(models.bill, {
       foreignKey: 'billId',
       onDelete: 'CASCADE',
     });
   };
-  return Vote;
+  return vote;
 };

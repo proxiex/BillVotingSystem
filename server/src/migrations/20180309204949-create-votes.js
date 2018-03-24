@@ -1,7 +1,7 @@
 
 
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Votes', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('votes', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -11,20 +11,23 @@ module.exports = {
     billId: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'Bills',
+        model: 'bills',
         key: 'id'
       }
     },
     userId: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'Users',
+        model: 'users',
         key: 'id'
       }
     },
     vote: {
       allowNull: false,
       type: Sequelize.ENUM('For', 'Against')
+    },
+    opinion: {
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
@@ -35,5 +38,5 @@ module.exports = {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Votes')
+  down: queryInterface => queryInterface.dropTable('votes')
 };

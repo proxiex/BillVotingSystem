@@ -1,7 +1,5 @@
-
-
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Bills', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('bills', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -29,7 +27,6 @@ module.exports = {
       }
     },
     billProgress: {
-      allowNull: false,
       type: Sequelize.ENUM('Not enacted', 'Senate Voted', 'House Passed')
     },
     createdAt: {
@@ -41,5 +38,5 @@ module.exports = {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Bills')
+  down: queryInterface => queryInterface.dropTable('bills')
 };

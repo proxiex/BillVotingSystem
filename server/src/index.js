@@ -1,23 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import * as http from 'http';
-
+import routes from './routes';
 
 const app = express();
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/api/v1', routes);
 
 const port = parseInt(process.env.PORT, 10) || 9001;
-app.set('port', port);
 
-const server = http.createServer(app);
-server.listen(port);
+app.listen(port, () =>
+  console.log(`Running on localhost: 
+  ${port} Node Env: ${process.env.NODE_ENV}`));
 
-app.get('/', (req, res) => {
-  res.status(200).send('ok it wors');
-});
-
-console.log(`Server is up @ ${port}`);
+export default app;

@@ -1,18 +1,31 @@
-
-
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+export default (sequelize, DataTypes) => {
+  const user = sequelize.define('user', {
     username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Username can not be empty'
+        },
+        min: 3
+      }
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isEmail: {
+          msg: 'Email address must be valid'
+        },
+        min: 3
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      Validate: {
+        min: 6
+      }
     },
     firstname: {
       type: DataTypes.STRING,
@@ -24,19 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     role: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: 'user'
     }
   });
 
-  User.associate = (models) => {
-    User.hasMany(models.Votes, {
-      foreignKey: 'userId',
-    });
-
-    User.hasMany(models.Opinions, {
+  user.associate = (models) => {
+    user.hasMany(models.vote, {
       foreignKey: 'userId',
     });
   };
 
-  return User;
+  return user;
 };
