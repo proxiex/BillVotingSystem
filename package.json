@@ -4,7 +4,7 @@
   "description": "A simple app that allow’s user to document their daily activities.",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npm run undo:test && npm run migrate:test && nyc --reporter=html --reporter=text mocha ./server/test/*.* --compilers js:babel-register",
+    "test": "npm run undo && npm run migrate && nyc --reporter=html --reporter=text mocha ./server/test/*.* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "start": "nodemon ./server/dist/",
@@ -13,10 +13,7 @@
     "postinstall": "npm run migrate && npm run build",
     "seed": "sequelize db:seed:all",
     "migrate": "sequelize db:migrate && npm run seed",
-    "undo": "sequelize db:migrate:undo:all",
-    "seed:test": "NODE_ENV=test sequelize db:seed:all",
-    "migrate:test": "NODE_ENV=test sequelize db:migrate && npm run seed:test",
-    "undo:test": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "undo": "sequelize db:migrate:undo:all"
   },
   "keywords": [
     "Bill",

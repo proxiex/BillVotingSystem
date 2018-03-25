@@ -26,7 +26,7 @@ let adminToken;
   });
 
    describe('Create bill', () => {
-    it('should not allow unauthorized user create a bill', () => {
+    it('should not allow unauthorized user create a bill', (done) => {
       chai.request(app)
       .post('/api/v1/bill/create')
       .send(fakeData.noBill)
@@ -40,7 +40,7 @@ let adminToken;
       });
     });
 
-    it('should not allow user create a bill with no data', () => {
+    it('should not allow user create a bill with no data', (done) => {
       chai.request(app)
       .post('/api/v1/bill/create')
       .send(fakeData.noBill)
@@ -60,7 +60,7 @@ let adminToken;
       });
     });
 
-    it('should  allow user create a bill', () => {
+    it('should  allow user create a bill', (done) => {
       chai.request(app)
       .post('/api/v1/bill/create')
       .send(fakeData.bill)
@@ -76,7 +76,7 @@ let adminToken;
 
    });
 
-   describe('Edit bill', () => {
+   describe('Edit bill', (done) => {
     it('should  allow user throw an error if bill id is not valid', () => {
       chai.request(app)
       .patch('/api/v1/bill/edit/ok')
@@ -90,7 +90,7 @@ let adminToken;
       });
     });
 
-    it('should throw an error if bill does not exisits.', () => {
+    it('should throw an error if bill does not exisits.', (done) => {
       chai.request(app)
       .patch('/api/v1/bill/edit/3000')
       .send(fakeData.bill)
@@ -103,7 +103,7 @@ let adminToken;
       });
     });
 
-    it('should  allow user edit bill', () => {
+    it('should  allow user edit bill', (done) => {
       chai.request(app)
       .patch('/api/v1/bill/edit/3')
       .send(fakeData.editBill)
@@ -122,9 +122,22 @@ let adminToken;
    });
    
    describe('Delete Bill', () => {
-      it('should throw error if bill not found', (done) => {
+      
+    it('should delete bill with no errors', (done) => {
+      chai.request(app)
+      .delete('/api/v1/bill/delete/3')
+      .set('token', adminToken)
+      .end((err, res) => {
+        const message = 'Bill has been deleted sucessfully!';
+        expect(res.status).to.equal(200);
+        expect(res.body).to.haveOwnProperty('message').to.eql(message);
+        done();
+      });
+    });
+
+      it('should thro errors if bill not found', (done) => {
         chai.request(app)
-        .delete('/api/v1/bill/delete/30000')
+        .delete('/api/v1/bill/delete/3')
         .set('token', adminToken)
         .end((err, res) => {
           const message = 'Bill not found!';
@@ -134,17 +147,6 @@ let adminToken;
         });
       });
 
-      it('should delete bill with no errors', (done) => {
-        chai.request(app)
-        .delete('/api/v1/bill/delete/3')
-        .set('token', adminToken)
-        .end((err, res) => {
-          const message = 'Bill has been deleted sucessfully!';
-          expect(res.status).to.equal(200);
-          expect(res.body).to.haveOwnProperty('message').to.eql(message);
-          done();
-        });
-      });
    });
    
    
